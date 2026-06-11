@@ -1,167 +1,674 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rania Amouri – Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rania Amouri — Développeuse Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0D0D0D;
+      --card:    #141414;
+      --gold:    #C9A96E;
+      --gold-dim:#6B5B3E;
+      --cream:   #F5F0E8;
+      --muted:   #8A8A8A;
+      --border:  #222222;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Georgia', serif;
-      background: #0a0a0a;
-      color: #f0f0f0;
-    }
-
-    header {
-      text-align: center;
-      padding: 80px 20px 60px;
-      border-bottom: 1px solid #222;
-    }
-
-    header h1 {
-      font-size: 2.8rem;
-      letter-spacing: 4px;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-
-    header p {
-      font-size: 1rem;
-      color: #888;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    section {
-      max-width: 800px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-
-    h2 {
-      font-size: 1.1rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #888;
-      margin-bottom: 30px;
-      border-bottom: 1px solid #222;
-      padding-bottom: 10px;
-    }
-
-    .projet {
-      background: #111;
-      border: 1px solid #222;
-      padding: 30px;
-      margin-bottom: 20px;
-      border-radius: 4px;
-    }
-
-    .projet h3 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .projet p {
-      color: #888;
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
       line-height: 1.7;
-      margin-bottom: 16px;
+      overflow-x: hidden;
     }
 
-    .tags span {
-      display: inline-block;
-      border: 1px solid #333;
-      color: #aaa;
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 20px;
-      margin-right: 6px;
-      letter-spacing: 1px;
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 2rem;
+      z-index: 100;
+      display: flex;
+      gap: .5rem;
+    }
+    .lang-btn {
+      background: none;
+      border: 1px solid var(--gold-dim);
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: .7rem;
+      letter-spacing: .12em;
+      padding: .3rem .7rem;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .lang-btn.active {
+      border-color: var(--gold);
+      color: var(--gold);
     }
 
-    .projet a {
-      display: inline-block;
-      margin-top: 16px;
-      color: #fff;
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 1.5rem;
+      left: 2rem;
+      z-index: 100;
+    }
+    nav a {
+      color: var(--muted);
       text-decoration: none;
-      border-bottom: 1px solid #555;
-      font-size: 0.9rem;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-right: 2rem;
+      transition: color .3s;
+    }
+    nav a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 8vw;
+      position: relative;
     }
 
-    .competences {
+    .hero-eyebrow {
+      font-size: .7rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp .8s .3s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--cream);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s .5s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* Signature line */
+    .signature-line {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 2.5rem 0;
+      animation: drawLine 1.2s 1.2s forwards;
+    }
+    @keyframes drawLine { to { width: min(420px, 60vw); } }
+
+    .hero-sub {
+      font-size: clamp(.85rem, 1.5vw, 1rem);
+      color: var(--muted);
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeUp .8s 1.4s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .8s 1.6s forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: .75rem 2rem;
+      font-size: .75rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all .3s;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      border: none;
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .btn-gold:hover { background: var(--cream); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      color: var(--cream);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 8vw;
+      font-size: .65rem;
+      letter-spacing: .2em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      animation: pulse 2.5s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 8rem 8vw; }
+
+    .section-label {
+      font-size: .65rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: var(--gold-dim);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { border-top: 1px solid var(--border); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      font-size: .95rem;
+    }
+
+    .about-text p strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    .about-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .fact {
+      border-left: 1px solid var(--gold-dim);
+      padding-left: 1.5rem;
+    }
+    .fact-label {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .4rem;
+    }
+    .fact-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { border-top: 1px solid var(--border); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .project-card {
+      background: var(--card);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: background .4s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width .6s;
+    }
+    .project-card:hover::before { width: 100%; }
+    .project-card:hover { background: #181818; }
+
+    .project-tag {
+      font-size: .6rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .project-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .project-desc {
+      font-size: .88rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+    .project-stack {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: .5rem;
+    }
+    .stack-pill {
+      font-size: .65rem;
+      letter-spacing: .1em;
+      border: 1px solid var(--gold-dim);
+      color: var(--gold-dim);
+      padding: .25rem .7rem;
+    }
+    .project-arrow {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      font-size: 1.5rem;
+      color: var(--gold-dim);
+      transition: all .3s;
+    }
+    .project-card:hover .project-arrow {
+      color: var(--gold);
+      transform: translate(4px, -4px);
     }
 
-    .competences span {
-      border: 1px solid #333;
-      color: #aaa;
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
+    /* ── SKILLS ── */
+    #skills { border-top: 1px solid var(--border); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
     }
 
+    .skill-group-title {
+      font-size: .65rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: .75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .88rem;
+      color: var(--muted);
+      transition: color .3s;
+    }
+    .skill-item:hover { color: var(--cream); }
+    .skill-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── CONTACT ── */
+    #contact { border-top: 1px solid var(--border); text-align: center; }
+
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-sub {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 3rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+
+    /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 60px 20px;
-      color: #444;
-      font-size: 0.85rem;
-      border-top: 1px solid #222;
+      padding: 2rem 8vw;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .7rem;
+      color: var(--gold-dim);
+      letter-spacing: .1em;
     }
 
-    footer a {
-      color: #888;
-      text-decoration: none;
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── LANG VISIBILITY ── */
+    .fr, .en { display: none; }
+    body.lang-fr .fr { display: block; }
+    body.lang-en .en { display: block; }
+    body.lang-fr .fr.inline,
+    body.lang-en .en.inline { display: inline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
-<body>
+<body class="lang-fr">
 
-  <header>
-    <h1>Rania Amouri</h1>
-    <p>Étudiante BTS SIO SLAM · En recherche d'alternance</p>
-  </header>
+  <!-- LANG TOGGLE -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
 
-  <section>
-    <h2>Projets</h2>
+  <!-- NAV -->
+  <nav>
+    <a href="#about" class="fr">À propos</a>
+    <a href="#about" class="en">About</a>
+    <a href="#projects" class="fr">Projets</a>
+    <a href="#projects" class="en">Projects</a>
+    <a href="#skills" class="fr">Compétences</a>
+    <a href="#skills" class="en">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-    <div class="projet">
-      <h3>The Tira Sanctuary</h3>
-      <p>Site e-commerce Shopify créé et configuré de A à Z de façon autonome. 
-      Personnalisation du thème via HTML, CSS et Liquid. Gestion des produits, 
-      de l'expérience utilisateur et de l'identité visuelle.</p>
-      <div class="tags">
-        <span>Shopify</span>
-        <span>Liquid</span>
-        <span>HTML</span>
-        <span>CSS</span>
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-eyebrow fr">Développeuse Web · Île-de-France</p>
+    <p class="hero-eyebrow en">Web Developer · Île-de-France</p>
+    <h1 class="hero-name">
+      Rania<br/><em>Amouri</em>
+    </h1>
+    <div class="signature-line"></div>
+    <p class="hero-sub fr">
+      En reconversion vers le développement web — je construis des expériences digitales qui ont du sens, du concept au code.
+    </p>
+    <p class="hero-sub en">
+      Career-changer turned web developer — I build digital experiences with purpose, from concept to code.
+    </p>
+    <div class="hero-cta">
+      <a href="cv-rania-amouri.pdf" download class="btn btn-gold fr">Télécharger mon CV</a>
+      <a href="cv-rania-amouri.pdf" download class="btn btn-gold en">Download my CV</a>
+      <a href="#contact" class="btn btn-outline fr">Me contacter</a>
+      <a href="#contact" class="btn btn-outline en">Get in touch</a>
+    </div>
+    <span class="scroll-hint fr">↓ Défiler</span>
+    <span class="scroll-hint en">↓ Scroll</span>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label reveal fr">À propos</p>
+    <p class="section-label reveal en">About me</p>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <h2 class="section-title fr">
+          Construire avant<br/>d'apprendre.
+        </h2>
+        <h2 class="section-title en">
+          Build first,<br/>then learn more.
+        </h2>
+        <p class="fr">
+          Mon parcours dans le développement web a commencé par un projet concret : <strong>The Tira Sanctuary</strong>, une boutique e-commerce que j'ai conçue, designée et déployée seule, sans formation préalable.
+        </p>
+        <p class="en">
+          My journey into web development started with a real project: <strong>The Tira Sanctuary</strong>, an e-commerce store I designed and launched entirely on my own, before any formal training.
+        </p>
+        <p class="fr">
+          Aujourd'hui, je formalise ces compétences autodidactes via un <strong>BTS SIO option SLAM</strong> et recherche une alternance en Île-de-France à partir de septembre 2026.
+        </p>
+        <p class="en">
+          Today, I'm formalizing these self-taught skills through a <strong>BTS SIO SLAM</strong> program and am looking for a work-study contract in Île-de-France starting September 2026.
+        </p>
+        <p class="fr">
+          Ce qui me caractérise : autonomie, sens du détail visuel, et une capacité à apprendre en faisant.
+        </p>
+        <p class="en">
+          What defines me: autonomy, an eye for visual detail, and a learn-by-doing mindset.
+        </p>
       </div>
-      <a href="https://thetirtasanctuary.com" target="_blank">Voir le site →</a>
+
+      <div class="about-facts reveal">
+        <div class="fact">
+          <p class="fact-label fr">Formation</p>
+          <p class="fact-label en">Education</p>
+          <p class="fact-value">BTS SIO SLAM</p>
+        </div>
+        <div class="fact">
+          <p class="fact-label fr">Disponibilité</p>
+          <p class="fact-label en">Availability</p>
+          <p class="fact-value fr">Alternance · Sept. 2026</p>
+          <p class="fact-value en">Work-study · Sept. 2026</p>
+        </div>
+        <div class="fact">
+          <p class="fact-label fr">Localisation</p>
+          <p class="fact-label en">Location</p>
+          <p class="fact-value">Île-de-France (92)</p>
+        </div>
+        <div class="fact">
+          <p class="fact-label fr">Langues</p>
+          <p class="fact-label en">Languages</p>
+          <p class="fact-value">FR · EN · AR</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>Compétences</h2>
-    <div class="competences">
-      <span>HTML</span>
-      <span>CSS</span>
-      <span>JavaScript</span>
-      <span>Liquid Shopify</span>
-      <span>Git & GitHub</span>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label reveal fr">Projets</p>
+    <p class="section-label reveal en">Projects</p>
+
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <a class="project-card reveal" href="https://thetirtasanctuary.com" target="_blank" rel="noopener">
+        <p class="project-tag fr">Projet fondateur · E-commerce</p>
+        <p class="project-tag en">Founder project · E-commerce</p>
+        <h3 class="project-title">The Tira Sanctuary</h3>
+        <p class="project-desc fr">
+          Boutique e-commerce dédiée au bien-être spirituel et au luxe accessible. Conçue entièrement en autonomie : UX, design, contenu, déploiement.
+        </p>
+        <p class="project-desc en">
+          An e-commerce store focused on spiritual wellness and accessible luxury. Fully self-built: UX, design, content, deployment.
+        </p>
+        <div class="project-stack">
+          <span class="stack-pill">Shopify</span>
+          <span class="stack-pill">Liquid</span>
+          <span class="stack-pill">HTML</span>
+          <span class="stack-pill">CSS</span>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <!-- Project 2 -->
+      <a class="project-card reveal" href="https://rania-amouri.github.io/portfolio" target="_blank" rel="noopener">
+        <p class="project-tag fr">Portfolio · Design web</p>
+        <p class="project-tag en">Portfolio · Web design</p>
+        <h3 class="project-title">Portfolio</h3>
+        <p class="project-desc fr">
+          Mon portfolio personnel — vitrine de mon univers visuel et de mes compétences techniques en HTML et CSS.
+        </p>
+        <p class="project-desc en">
+          My personal portfolio — a showcase of my visual aesthetic and technical skills in HTML and CSS.
+        </p>
+        <div class="project-stack">
+          <span class="stack-pill">HTML5</span>
+          <span class="stack-pill">CSS3</span>
+          <span class="stack-pill">GitHub Pages</span>
+        </div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <!-- Coming soon card -->
+      <div class="project-card reveal" style="opacity:.5; cursor:default;">
+        <p class="project-tag fr">À venir · Formation</p>
+        <p class="project-tag en">Coming soon · Training</p>
+        <h3 class="project-title fr">Projet BTS SIO</h3>
+        <h3 class="project-title en">BTS SIO Project</h3>
+        <p class="project-desc fr">D'autres projets arrivent au fil de la formation.</p>
+        <p class="project-desc en">More projects coming as the program progresses.</p>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>Contact</h2>
-    <p style="color:#888;">rania92800@gmail.com</p>
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label reveal fr">Compétences</p>
+    <p class="section-label reveal en">Skills</p>
+
+    <div class="skills-grid">
+      <div class="reveal">
+        <p class="skill-group-title fr">Langages & Frontend</p>
+        <p class="skill-group-title en">Languages & Frontend</p>
+        <div class="skill-item"><span class="skill-dot"></span>HTML5</div>
+        <div class="skill-item"><span class="skill-dot"></span>CSS3</div>
+        <div class="skill-item"><span class="skill-dot"></span>JavaScript (bases)</div>
+        <div class="skill-item"><span class="skill-dot"></span>Responsive Design</div>
+      </div>
+      <div class="reveal">
+        <p class="skill-group-title fr">Plateformes & Outils</p>
+        <p class="skill-group-title en">Platforms & Tools</p>
+        <div class="skill-item"><span class="skill-dot"></span>Shopify · Liquid</div>
+        <div class="skill-item"><span class="skill-dot"></span>Git · GitHub</div>
+        <div class="skill-item"><span class="skill-dot"></span>VS Code</div>
+        <div class="skill-item"><span class="skill-dot"></span>GitHub Pages</div>
+      </div>
+      <div class="reveal">
+        <p class="skill-group-title fr">En apprentissage</p>
+        <p class="skill-group-title en">Currently learning</p>
+        <div class="skill-item"><span class="skill-dot"></span>Python</div>
+        <div class="skill-item"><span class="skill-dot"></span>SQL</div>
+        <div class="skill-item"><span class="skill-dot"></span>JavaScript avancé</div>
+      </div>
+    </div>
   </section>
 
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label reveal" style="justify-content:center;">Contact</p>
+    <h2 class="contact-title reveal fr">Travaillons ensemble.</h2>
+    <h2 class="contact-title reveal en">Let's work together.</h2>
+    <p class="contact-sub reveal fr">
+      Disponible pour une alternance à partir de septembre 2026 en Île-de-France. N'hésitez pas à me contacter.
+    </p>
+    <p class="contact-sub reveal en">
+      Available for a work-study contract from September 2026 in Île-de-France. Feel free to reach out.
+    </p>
+    <div class="contact-links reveal">
+      <a href="mailto:Rania92800@gmail.com" class="btn btn-gold">Rania92800@gmail.com</a>
+      <a href="https://www.linkedin.com/in/rania-amouri-637306384" target="_blank" class="btn btn-outline">LinkedIn</a>
+      <a href="https://github.com/rania-amouri" target="_blank" class="btn btn-outline">GitHub</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <a href="https://github.com/rania-amouri">GitHub</a>
+    <span>© 2026 Rania Amouri</span>
+    <span class="fr">Conçu & développé avec soin</span>
+    <span class="en">Designed & built with care</span>
   </footer>
 
+  <script>
+    // ── LANG TOGGLE ──
+    function setLang(lang) {
+      document.body.className = 'lang-' + lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+      });
+    }
+
+    // ── SCROLL REVEAL ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
+
