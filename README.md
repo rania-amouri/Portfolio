@@ -6,7 +6,7 @@
 
 *Je construis des expériences digitales qui ont du sens — du concept au code.*
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=github&logoColor=white)](https://rania-amouri.github.io/portfolio)
+[![Portfolio][(https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=github&logoColor=white)](https://rania-amouri.github.io/portfolio)](https://rania-amouri.github.io/Portfolio/#projects)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rania-amouri-637306384)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:Rania92800@gmail.com)
 
@@ -24,7 +24,7 @@ Ce qui me caractérise : autonomie, sens du détail visuel, et capacité à appr
 
 ---
 
-## 🛍️ Projet phare — The Tira Sanctuary
+## 🛍️ Projet phare — The Tirta Sanctuary
 
 > *Boutique e-commerce dédiée au bien-être spirituel et au luxe accessible.*
 
@@ -82,7 +82,7 @@ Ce projet est 100% personnel : idée, design, contenu, déploiement. C'est lui q
 
 | Projet | Description | Stack | Lien |
 |---|---|---|---|
-| 🌿 The Tira Sanctuary | Boutique e-commerce bien-être | Shopify · HTML · CSS | [Voir le site](https://thetirtasanctuary.com) |
+| 🌿 The Tirta Sanctuary | Boutique e-commerce bien-être | Shopify · HTML · CSS | [Voir le site](https://thetirtasanctuary.com) |
 | 🗂️ Portfolio | Mon portfolio personnel | HTML · CSS | [Voir le portfolio](https://rania-amouri.github.io/portfolio) |
 
 *D'autres projets arrivent au fil de la formation — stay tuned 👀*
